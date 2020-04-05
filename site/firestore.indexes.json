@@ -1,0 +1,12 @@
+{
+"indexes": [
+  {
+    "collectionGroup": "facilities",
+    "queryScope": "COLLECTION",
+    "fields": [
+	 { "fieldPath": "lastupdated", "order": "ASCENDING" }
+    ]
+  }
+  ],
+  "fieldOverrides": []
+}

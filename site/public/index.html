@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Welcome to Firebase Hosting</title>
+
+    <!-- update the version number as needed -->
+    <script defer src="/__/firebase/7.13.0/firebase-app.js"></script>
+    <script defer src="/__/firebase/7.13.0/firebase-auth.js"></script>
+    <script defer src="/__/firebase/7.13.0/firebase-firestore.js"></script>
+
+    <!-- initialize the SDK after all desired features are loaded -->
+    <!-- <script defer src="/__/firebase/init.js"></script> -->
+   
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="css/keen-dashboards.css">
+   <link rel="stylesheet" href="css/dc.css">
+   
+   <link rel="stylesheet" href="css/leaflet.css">
+   <link rel="icon" href="data:;base64,=">
+	 
+    <style media="screen">
+      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      }
+    </style>
+  </head>
+  <body>
+
+
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+   <div class="container-fluid">
+	 <div class="navbar-header">
+	    <a class="navbar-brand" href="./">KatMap Dashboard</a>
+	 </div>
+   </div>
+</div>
+
+<div id="selectShopTypes"></div>
+   <div class="chart-wrapper" align=center width= 100vw>
+	 <!-- thank you, https://stackoverflow.com/a/31728799 -->
+	 <div class="chart-title">
+	    Store Locations
+	 </div>
+	 <div class="chart-stage">
+	    <!-- <div id="leaflet-friend"></div> -->
+	    <div id="new-leaflet-friend" style="height: 70vh; border: 1px solid #AAA;">
+	    </div>
+	    <div id="summaryLabel">
+		  
+	    </div>
+    <!--	<div id="weird-choropleth"></div> -->
+	 </div>
+	 
+   </div>
+<!--</div>
+<!-- Map -->
+   
+   
+</div>
+
+<!-- <script src="lib/d3.js"></script>
+<script src="lib/dc.js"></script>
+<script src="lib/queue.js"></script> -->
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js" crossorigin=""></script>
+
+
+<!-- <script src="lib/leaflet.js"></script> -->
+
+<script src="//unpkg.com/navigo@6"></script>
+
+<script defer src="scripts/databaseManagement.js"></script>
+<script defer src="scripts/testy.js"></script>
+  </body>
+</html>
