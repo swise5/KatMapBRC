@@ -7,8 +7,8 @@ KatMap.prototype.makeMyMap = function(jsons){
    //
    // HELPER FUNCTIONS
    //
-   
-    // handle click events on stores
+
+   // handle click events on stores
     function storeOnClick(e){
 	  // reset existing selection, if it exists
 	  if (selection) {
@@ -34,12 +34,6 @@ KatMap.prototype.makeMyMap = function(jsons){
 	  var featureUpdated = currentFeature.properties.updated || "No update data provided";
 	  var featureWebsite = currentFeature.properties.storewebsite || "No data";
 	  var featurePhone = currentFeature.properties.storephone || "No data";
-/*    try {
-    featureSurveyDate = currentFeature.properties.source.replace(/_/g, " ") || "No survey info";
-    } catch {
-    featureSurveyDate = "No survey info";
-    }
-    */
 	  
 	  document.getElementById('summaryLabel').innerHTML =
 	    '<p style="font-size:18px"><b>' + featureName +
@@ -69,24 +63,17 @@ KatMap.prototype.makeMyMap = function(jsons){
 	    var inputForm = "<form name='updatedStoreInfoForm' id='updatedStoreInfoForm'>";
 	    inputForm += "<b>Name:</b> <input type='text' id='storename' name='storename' placeholder='" + storeName + "'><br>";
 	    inputForm += "<b>Website:</b> <input type='text' id='storewebsite' name='storewebsite' placeholder='" + website + "'><br>";
-	    inputForm += "<b>Phone:</b> <input type='tel' id='storephone' name='storephone' placeholder='" + phone + "'><br>";
+	    inputForm += "<b>Phone:</b> <input type='text' id='storephone' name='storephone' placeholder='" + phone + "'><br>";
+	    inputForm += "<b>Hours:</b> <input type='text' id='hours' name='hours' placeholder='" + store['hours'] + "'><br>";
 	    inputForm += "<input type='button' id='saveStoreButton' value='SAVE NEW INFO'>";
+	    
 	    inputForm += "</form>";
 	    document.getElementById('editSection').innerHTML = inputForm;
 	    
 	    var updateButton = document.getElementById('saveStoreButton');
 	    updateButton.addEventListener('click', updateStore);
 
-//	    website, phone, online, clickAndCollect, openings = , store['website'], store['phone'], store['online'], store['click_and_collect'], store['openings'];
-	    
-/*	    const collection = firebase.firestore().collection("facilities").where("id", "==", selection.properties.id).limit(1);
-	    const document = collection.doc(restaurantID);
-	    const newRatingDocument = document.collection('ratings').doc();
-	    
-	    
-	    firebase.firestore().collection("facilities").doc("stores").limit(1).get().then(function(record){
-			   console.log(typeof record);
-																		    }											  );*/
+
 	 }
 	 else {
 	    console.log("ERROR: no store selected for update");
@@ -134,7 +121,7 @@ KatMap.prototype.makeMyMap = function(jsons){
    });
 
     // SET UP THE MAP
-    
+   
    var map = L.map('new-leaflet-friend', {
 			    center: [51.3678764,-0.1173447],
 			    zoom: 13
