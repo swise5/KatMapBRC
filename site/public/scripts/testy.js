@@ -50,13 +50,12 @@ KatMap.prototype.makeMyMap = function(jsons){
    // edit and update the store information
    function editStore(e){
 	 if(selection != null){
-	    
-	    var store = selection.properties;
+
 	    // center on the store
-	    var loc = store.location;
-	    map.flyTo([loc["V"], loc["U"]], 15);
+	    map.flyTo(selection.location, 15);
 	    
 	    // pull down the latest information from that store
+	    var store = selection.properties;
 
 	    var storeName = store['name'], website = store['storewebsite'], phone = store['storephone'];
 	    
@@ -145,6 +144,7 @@ KatMap.prototype.makeMyMap = function(jsons){
 
 			  var shopMarker = L.marker([shop['Latitude'], shop['Longitude']], {icon: storeIcon}).on('click', storeOnClick);
 			  shopMarker["properties"] = {"name": shop["Name"], "type": shop["Type"], "osmID": shop["osmID"]};
+			  shopMarker["location"] = [shop['Latitude'], shop['Longitude']];
 			  myList.push(shopMarker);
 			  });
    var layerGroup = L.layerGroup(myList);
