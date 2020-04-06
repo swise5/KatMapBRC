@@ -13,7 +13,8 @@ function KatMap(){
    const config = {
    apiKey: "AIzaSyBaeFiKklF62XnAKM_UYPSJ86YRn0i293c",
    authDomain: "katmapbrc.firebaseapp.com",
-   databaseURL: "https://katmapbrc.firebaseio.com",
+	 databaseURL: "https://katmapbrc-gsintegration.firebaseio.com",
+   //databaseURL: "https://katmapbrc.firebaseio.com",
    projectId: "katmapbrc",
    storageBucket: "katmapbrc.appspot.com",
    messagingSenderId: "7127005392",
@@ -31,9 +32,20 @@ function KatMap(){
 			   console.log(err);
 			   });
    
-   firebase.firestore(this.app).collection("facilities")//.where("verified", "==", true)
+/*   firebase.firestore(this.app).collection("facilities")//.where("verified", "==", true)
    .get()
    .then(that.makeMyMap);
+   */
+   var dbRef = firebase.database().ref('1EGZA6sD7G4gvWPjp3olYySHcpPRDJoDB1rM1xAYp_y0');
+   dbRef.on('value', function(data) {
+		  var myList = [];
+		  data.forEach(function(v){
+					if(typeof v.val() !== 'undefined')
+					  myList.push(v.val());
+					});
+		  that.makeMyMap(myList[0]);
+   });
+
 }
 
 

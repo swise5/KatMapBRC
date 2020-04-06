@@ -139,11 +139,12 @@ KatMap.prototype.makeMyMap = function(jsons){
 				    });
    
    var myList = [];
+   
    jsons.forEach(function(val){
-			  var shop = val.data();
-			  var loc = shop["location"];
-			  var shopMarker = L.marker([loc['V'], loc['U']], {icon: storeIcon}).on('click', storeOnClick);
-			  shopMarker["properties"] = shop;
+			  var shop = val;//.data();
+
+			  var shopMarker = L.marker([shop['Latitude'], shop['Longitude']], {icon: storeIcon}).on('click', storeOnClick);
+			  shopMarker["properties"] = {"name": shop["Name"], "type": shop["Type"], "osmID": shop["osmID"]};
 			  myList.push(shopMarker);
 			  });
    var layerGroup = L.layerGroup(myList);
