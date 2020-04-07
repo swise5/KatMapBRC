@@ -10,17 +10,7 @@ function KatMap(){
    
    this.dialogs = {};
    
-   const config = {
-   apiKey: "AIzaSyBaeFiKklF62XnAKM_UYPSJ86YRn0i293c",
-   authDomain: "katmapbrc.firebaseapp.com",
-	 databaseURL: "https://katmapbrc-gsintegration.firebaseio.com",
-   //databaseURL: "https://katmapbrc.firebaseio.com",
-   projectId: "katmapbrc",
-   storageBucket: "katmapbrc.appspot.com",
-   messagingSenderId: "7127005392",
-   appId: "1:7127005392:web:3c2f4007ec6324665ec6d5",
-   measurementId: "G-PEYEXJDWCR"
-   };
+   configfriend
    this.app = firebase.initializeApp(config);
    
    var that = this;
