@@ -10,7 +10,6 @@ function KatMap(){
    
    this.dialogs = {};
    
-   configfriend
    this.app = firebase.initializeApp(config);
    
    var that = this;
