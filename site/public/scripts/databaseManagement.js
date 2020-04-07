@@ -25,14 +25,14 @@ function KatMap(){
    .get()
    .then(that.makeMyMap);
    */
-   var dbRef = firebase.database().ref('1EGZA6sD7G4gvWPjp3olYySHcpPRDJoDB1rM1xAYp_y0');
+   var dbRef = firebase.database().ref('1EGZA6sD7G4gvWPjp3olYySHcpPRDJoDB1rM1xAYp_y0/Sheet1');
    dbRef.on('value', function(data) {
 		  var myList = [];
 		  data.forEach(function(v){
 					if(typeof v.val() !== 'undefined')
 					  myList.push(v.val());
 					});
-		  that.makeMyMap(myList[0]);
+		  that.makeMyMap(myList);
    });
 
 }
