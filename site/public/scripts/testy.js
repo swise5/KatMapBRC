@@ -152,14 +152,13 @@ function updateStore(){
    var myList = [];
    
  //  pal <- colorFactor(c("navy", "red"), domain = c("Aldi", "Iceland", "Tesco", "Sainsburys", "Waitrose", "Lidl", "M&S", "Budgens", "Co-op", "INDEPENDENT", "Sainsbury's", "Londis,", "Nisa", "CostCutter,", "Hathaways,", "Kandies", "McColl's,", "COOP,", "Brockley", "Best-one,", "Niazi", "Budgens,"))
-var brandColor = {"Aldi": "#882222", "Iceland": "#996666", "Tesco": "#333399", "Sainsburys": "#ff9900", "Waitrose": "#888822", "Lidl": "#888822", "M&S": "#888822", "Budgens": "#888822", "Co-op": "#888822", "INDEPENDENT": "#ffffff", "Sainsbury's": "#888822", "Londis,": "#888822", "Nisa": "#888822", "CostCutter,": "#888822", "Hathaways,": "#888822", "Kandies": "#888822", "McColl's,": "#888822", "COOP,": "#888822", "Brockley": "#888822", "Best-one,": "#888822", "Niazi": "#888822", "Budgens,": "#888822"};
+ var brandColor = {"Aldi": "#882222", "Iceland": "#996666", "Tesco": "#333399", "Sainsburys": "#ff9900", "Waitrose": "#888822", "Lidl": "#888822", "M&S": "#888822", "Budgens": "#888822", "Co-op": "#888822", "INDEPENDENT": "#ffffff", "Sainsbury's": "#888822", "Londis,": "#888822", "Nisa": "#888822", "CostCutter,": "#888822", "Hathaways,": "#888822", "Kandies": "#888822", "McColl's,": "#888822", "COOP,": "#888822", "Brockley": "#888822", "Best-one,": "#888822", "Niazi": "#888822", "Budgens,": "#888822"};
 
 
  jsons.forEach(function(val){
 			  var shop = val;//.data();
 			  
 			  var myBrand = val["Brand"];
-			  console.log(myBrand);
 
 //			  var shopMarker = L.marker([shop['Latitude'], shop['Longitude']], {icon: storeIcon}).on('click', storeOnClick);
 
@@ -229,3 +228,42 @@ function myFunc(){
 	console.log(layersVisible);
 
 };
+
+KatMap.prototype.makeTableView = function(jsons){
+
+	var myTable = document.createElement('table');
+	//myTable.style.width='90%';
+	myTable.style.minWidth = '500px';
+	myTable.setAttribute('border', '1');
+	myTable.style.overflow='scroll';
+	myTable.style.margin='10px';
+	
+	var myTableBody = document.createElement('tbody');
+
+	var displayCols = ['Name', 'Address', 'Phone number', 'Notes', 'Brand'];
+
+	console.log(jsons[0]);
+
+	var headerTr = document.createElement('tr');
+	for(var i in displayCols){
+		var th = document.createElement('th');
+		th.appendChild(document.createTextNode(displayCols[i]));
+		headerTr.appendChild(th);
+	}
+	myTableBody.appendChild(headerTr);
+
+	 jsons.forEach(function(val){
+//	 	console.log(val);
+	 	var tr = document.createElement('tr');
+	 	for (var i in displayCols){
+	 		var td = document.createElement('td');
+	 		td.appendChild(document.createTextNode(val[displayCols[i]]));
+	 		tr.appendChild(td);
+	 	}
+	 	myTableBody.appendChild(tr);
+	});
+
+	myTable.appendChild(myTableBody);
+	document.querySelector('.mapHolder').appendChild(myTable);
+
+}
