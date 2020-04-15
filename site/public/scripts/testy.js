@@ -172,6 +172,31 @@ myList.push(shopMarker);
  layerGroup.addTo(map);
 
 
+var options = {
+  enableHighAccuracy: true,
+  timeout: 5000,
+  maximumAge: 0
+};
+
+function success(pos) {
+  var crd = pos.coords;
+
+  console.log('Your current position is:');
+  console.log(`Latitude : ${crd.latitude}`);
+  console.log(`Longitude: ${crd.longitude}`);
+  console.log(`More or less ${crd.accuracy} meters.`);
+  var youMarker = L.circleMarker([crd.latitude, crd.longitude], {radius:selectedRadius, fillColor: "#FF0000", fillOpacity: 1.})
+  var myLayer = L.layerGroup([youMarker]);
+  myLayer.addTo(map);
+}
+
+function error(err) {
+  console.warn(`ERROR(${err.code}): ${err.message}`);
+}
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+
 
    /*   // ADD DATA
     
@@ -237,12 +262,10 @@ KatMap.prototype.makeTableView = function(jsons){
 	myTable.setAttribute('border', '1');
 	myTable.style.overflow='scroll';
 	myTable.style.margin='10px';
-	
+
 	var myTableBody = document.createElement('tbody');
 
 	var displayCols = ['Name', 'Address', 'Phone number', 'Notes', 'Brand'];
-
-	console.log(jsons[0]);
 
 	var headerTr = document.createElement('tr');
 	for(var i in displayCols){
@@ -260,6 +283,9 @@ KatMap.prototype.makeTableView = function(jsons){
 	 		td.appendChild(document.createTextNode(val[displayCols[i]]));
 	 		tr.appendChild(td);
 	 	}
+	 	tr.addEventListener("click", function(){
+	 		alert(val["Name"]);
+	 	});
 	 	myTableBody.appendChild(tr);
 	});
 
