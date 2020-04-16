@@ -41,22 +41,40 @@ KatMap.prototype.makeMyMap = function(jsons){
     function buildSummaryLabel(currentFeature){
 
     	var featureSurveyDate;
-    	var featureName = currentFeature.properties.name || "Unnamed feature";
+/*    	var featureName = currentFeature.properties.name || "Unnamed feature";
     	var featureUpdated = currentFeature.properties.updated || "No update data provided";
     	var featureWebsite = currentFeature.properties.storewebsite || "No data";
     	var featurePhone = currentFeature.properties.storephone || "No data";
+*/
 
-    	document.getElementById('summaryLabel').innerHTML =
-    	'<p style="font-size:18px"><b>' + featureName +
-    	'</b><br>Website: ' + featureWebsite +
-    	'</b><br>Phone number: ' + featurePhone +
-    	'</b><br>Updated: ' + featureUpdated +
-	    "</p>" + "</div>";// + "<div id='editStoresButton'></div><div id='editSection'></div>"; //+ '<br>Source: ' + featureSurveyDate + '</p>';
+    	var summaryLabelDiv = document.getElementById("summaryLabel");//informationSection");
+    	console.log(summaryLabelDiv);
+    	console.log(document);
+    	var summaryLabelFirstChild = summaryLabelDiv.children[0];
+    	//var mysummaryLabelDiv = summaryLabelDiv.childNodes;
+
+    	var storeNode = document.createElement("p");
+    	for(var i in currentFeature.properties){
+//    		console.log(i, currentFeature.properties[i]);
+			var myAttr = i + ": " + currentFeature.properties[i];
+    		storeNode.appendChild(document.createTextNode(myAttr));
+    		storeNode.appendChild(document.createElement("br"));
+    	}
+
+    	if(summaryLabelFirstChild !== undefined) {
+    		summaryLabelDiv.removeChild(summaryLabelFirstChild);
+	    	summaryLabelDiv.appendChild(storeNode);// + "<div id='editStoresButton'></div><div id='editSection'></div>"; //+ '<br>Source: ' + featureSurveyDate + '</p>';
+    	}
+	    else
+	    	summaryLabelDiv.appendChild(storeNode);
+
+	    summaryLabelDiv.setAttribute("style", "column-count: 3; text-align: left");
 
 /*	  var updateButton = document.getElementById('editStoresButton');
 	  updateButton.innerHTML = '<input type="button" value="Edit">';
 	  updateButton.addEventListener('click', editStore);
-	*/  };
+	*/
+	};
 
    // edit and update the store information
    function editStore(e){
@@ -145,7 +163,9 @@ function updateStore(){
    		resetMyMarker(selection, normalRadius, false);
    		
    		selection = null;
-   		document.getElementById('summaryLabel').innerHTML = '<p>Click a store on the map to get more information.</p>';
+   		var myNode = document.createElement("p");
+   		myNode.appendChild(document.createTextNode("Click a store on the map to get more information."));
+   		document.getElementById('summaryLabel').appendChild(myNode);
    	}
    });
    
@@ -164,7 +184,7 @@ function updateStore(){
 
 var shopMarker = L.circleMarker([shop['Latitude'], shop['Longitude']], {radius: normalRadius, fillColor: brandColor[myBrand], fillOpacity: .75, weight: 1, stroke: true, color: 'black'}).on('click', storeOnClick);
 
-shopMarker["properties"] = {"name": shop["Name"], "type": shop["Type"], "osmID": shop["osmID"]};
+shopMarker["properties"] = shop;
 shopMarker["location"] = [shop['Latitude'], shop['Longitude']];
 myList.push(shopMarker);
 });
@@ -172,12 +192,13 @@ myList.push(shopMarker);
  layerGroup.addTo(map);
 
 
-var options = {
+var gpsOptions = {
   enableHighAccuracy: true,
   timeout: 5000,
   maximumAge: 0
 };
 
+// https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
 function success(pos) {
   var crd = pos.coords;
 
@@ -194,65 +215,10 @@ function error(err) {
   console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-navigator.geolocation.getCurrentPosition(success, error, options);
+navigator.geolocation.getCurrentPosition(success, error, gpsOptions);
 
-
-
-   /*   // ADD DATA
-    
-    // ADD ALL LAYERS AND CREATE MENU
-    
-    // set up menu structure
-    var selectShopTypes = "<div style='column-count: 3'><form>";
-    
-    // add each
-    for(var k in storeTypeLayers){
-    console.log(k);
-    var layerGroup = L.layerGroup(storeTypeLayers[k]);
-    layerGroup.addTo(map);
-    
-    var indexName = "storeType_" + k;
-    selectShopTypes += "<label><input type=\"checkbox\" id=\"" + indexName + "\" name=\"shopType\"> " + k.replace(/_/g, " ") + "</input></label><br>";
-    
-    layersByName[indexName] = layerGroup;
-    layersVisible[indexName] = true;
-    
-    //https://leafletjs.com/examples/layers-control/
-    }
-    
-    var myButton = '<input type="button" value="Click me" onclick="myFunc()">';
-    
-    selectShopTypes += "</form></div>";
-    
-    selectShopTypes += myButton;
-    
-    document.getElementById('selectShopTypes').innerHTML = selectShopTypes;
-    */
 }
 
-function myFunc(){
-
-	var items=document.getElementsByName('shopType');
-	for(var i=0; i<items.length; i++){
-		console.log(items[i]);
-		if(!(items[i].type=='checkbox')){
-			console.log("ERROR: WTF MATE, U AIN'T A CHECKBOX");
-		}
-		else {
-			var checked = items[i].checked;
-			var myId = items[i].id;
-			if(!(layersVisible[myId] === checked)){
-				if (checked)
-					layersByName[myId].addTo(map);
-				else
-					layersByName[myId].remove();
-				layersVisible[myId] = checked;
-			}
-		}
-	}
-	console.log(layersVisible);
-
-};
 
 KatMap.prototype.makeTableView = function(jsons){
 
@@ -293,3 +259,4 @@ KatMap.prototype.makeTableView = function(jsons){
 	document.querySelector('.mapHolder').appendChild(myTable);
 
 }
+

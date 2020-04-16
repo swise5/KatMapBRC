@@ -13,11 +13,13 @@ function KatMap(){
 
 	this.dialogs = {};
 
+	this.editModeEngaged = false;
+
 	this.app = firebase.initializeApp(config);
 
 	var that = this;
 
-	firebase.firestore().enablePersistence()
+	firebase.firestore().enablePersistence({synchronizeTabs:true})
 	.then(function() {
 		return firebase.auth().signInAnonymously();
 	})
@@ -109,9 +111,7 @@ KatMap.prototype.tableView = function(){
 				myList.push(v.val());
 		});
 		that.makeTableView(myList);
-//		that.makeMyMap(myList);
 	});
-	//document.querySelector('.mapHolder').innerHTML = mytable;
 }
 
 KatMap.prototype.rerender = function() {
